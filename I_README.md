@@ -1,18 +1,46 @@
-# Tips for Publishing Research Code
+# Code for paper "An information-theoretic framework for learning models of instance-independent label noise".
+
+## 1. Gather LID sequences for the given dataset
+#### 1.1 The given dataset
+Some noisy dataset labels with symmetric noise transition matrices are provided in the directory "./given_datasets/intact/". Its title indicates its underlying clean dataset (CIFAR-10 or MNIST), the amount of noise in it and the random seed used to generate this noisy dataset.
+An example: `"./given_datasets/intact/cifar-10_train_labels_seed_42_add_20.0.npy"` is an intact CIFAR-10 dataset with 20% symmetric noise rate (generated with random seed 42).
+
+#### 1.2 Gather LID sequences
+
+An example: 
+`CUDA_VISIBLE_DEVICES=0 python main.py -l ./given_datasets/intact/cifar-10_train_labels_seed_42_add_20.0.npy -d cifar-10 -b 128`
+`-l`: location of the given noisy dataset
+`-d`: dataset in ['mnist', 'cifar-10']
+`-b`: training batch size number. 
+
+It should be noted that to estimate the noise transition matrix of a given dataset, we used minimum 10 random seeds with a fixed set of noise vectors (the fixed uniform alpha-set), which requires sufficient GPU computational power. The bottom part of the code `main.py` can be modified to reduce the number of random seeds used for a smaller trial.
+
+#### Expected result
+LID sequences would be generated under the directory "./lid". 
+Note that different devices could generate different LID sequences even with the same seed. However, on the same device, with the same random seed and running with complete number of epochs, the LID sequences can be replicated with our code. It is recommended to gather the LID sequences on the same device.
+
+
+## 2. Gather LID sequences for the given dataset
+
+
+## Requirements:
+pytorch, numpy, scipy
+
+[to delete]# Tips for Publishing Research Code
 
 <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/08/Logo_for_Conference_on_Neural_Information_Processing_Systems.svg/1200px-Logo_for_Conference_on_Neural_Information_Processing_Systems.svg.png" width=200>
 
-**💡 Collated best practices from most popular ML research repositories - *now official guidelines at NeurIPS 2020!*** 
+[to delete]**💡 Collated best practices from most popular ML research repositories - *now official guidelines at NeurIPS 2020!*** 
 
 Based on analysis of more than 200 Machine Learning repositories, these recommendations facilitate reproducibility and correlate with GitHub stars - for more details, see our [our blog post](https://medium.com/paperswithcode/ml-code-completeness-checklist-e9127b168501). 
 
 For NeurIPS 2020 code submissions it is recommended (but not mandatory) to use the [README.md template](templates/README.md) and check as many items on the ML Code Completeness Checklist (described below) as possible. 
 
-## 📋 README.md template
+[to delete]## 📋 README.md template
 
 We provide a [README.md template](templates/README.md) that you can use for releasing ML research repositories. The sections in the template were derived by looking at existing repositories, seeing which had the best reception in the community, and then looking at common components that correlate with popularity.
 
-## ✓ ML Code Completeness Checklist
+[to delete]## ✓ ML Code Completeness Checklist
 
 We compiled this checklist by looking at what's common to the most popular ML research repositories. In addition, we prioritized items that facilitate reproducibility and make it easier for others build upon research code.
 
@@ -30,7 +58,7 @@ NeurIPS 2019 repositories that had all five of these components had the highest 
 
 We explain each item on the checklist in detail blow. 
 
-#### 1. Specification of dependencies
+[delete] #### 1. Specification of dependencies
 
 If you are using Python, this means providing a `requirements.txt` file (if using `pip` and `virtualenv`), providing `environment.yml` file (if using anaconda), or a `setup.py` if your code is a library. 
 
@@ -38,19 +66,21 @@ It is good practice to provide a section in your README.md that explains how to 
 
 If you wish to provide whole reproducible environments, you might want to consider using Docker and upload a Docker image of your environment into Dockerhub. 
 
-#### 2. Training code
+
+
+[delete]#### 2. Training code
 
 Your code should have a training script that can be used to obtain the principal results stated in the paper. This means you should include hyperparameters and any tricks that were used in the process of getting your results. To maximize usefulness, ideally this code should be written with extensibility in mind: what if your user wants to use the same training script on their own dataset?
 
 You can provide a documented command line wrapper such as `train.py` to serve as a useful entry point for your users. 
 
-#### 3. Evaluation code
+[delete]#### 3. Evaluation code
 
 Model evaluation and experiments often depend on subtle details that are not always possible to explain in the paper. This is why including the exact code you used to evaluate or run experiments is helpful to give a complete description of the procedure. In turn, this helps the user to trust, understand and build on your research.
 
 You can provide a documented command line wrapper such as `eval.py` to serve as a useful entry point for your users.
 
-#### 4. Pre-trained models
+[delete] #### 4. Pre-trained models
 
 Training a model from scratch can be time-consuming and expensive. One way to increase trust in your results is to provide a pre-trained model that the community can evaluate to obtain the end results. This means users can see the results are credible without having to train afresh.
 
@@ -64,9 +94,9 @@ Adding a table of results into README.md lets your users quickly understand what
 
 You can further help the user understand and contextualize your results by linking back to the full leaderboard that has up-to-date results from other papers. There are [multiple leaderboard services](#results-leaderboards) where this information is stored.  
 
-## 🎉 Additional awesome resources for releasing research code
+[delete] ## 🎉 Additional awesome resources for releasing research code
 
-### Hosting pretrained models files
+[delete] ### Hosting pretrained models files
 
 1. [Zenodo](https://zenodo.org) - versioning, 50GB, free bandwidth, DOI, provides long-term preservation
 2. [GitHub Releases](https://help.github.com/en/github/administering-a-repository/managing-releases-in-a-repository) - versioning, 2GB file limit, free bandwidth
@@ -74,17 +104,17 @@ You can further help the user understand and contextualize your results by linki
 4. [Dropbox](https://dropbox.com) - versioning, 2GB (paid unlimited), free bandwidth
 5. [AWS S3](https://aws.amazon.com/s3/) - versioning, paid only, paid bandwidth
  
-### Managing model files
+[delete] ### Managing model files
 
 1. [RClone](https://rclone.org/) - provides unified access to many different cloud storage providers
 
-### Standardized model interfaces
+[delete] ### Standardized model interfaces
 
 1. [PyTorch Hub](https://pytorch.org/hub/)
 2. [Tensorflow Hub](https://www.tensorflow.org/hub)
 3. [Hugging Face NLP models](https://huggingface.co/models)
 
-### Results leaderboards
+[delete] ### Results leaderboards
 
 1. [Papers with Code leaderboards](https://paperswithcode.com/sota) - with 2500+ leaderboards
 2. [CodaLab](https://competitions.codalab.org/) - with 450+ leaderboards
@@ -93,19 +123,21 @@ You can further help the user understand and contextualize your results by linki
 5. [Collective Knowledge](https://cKnowledge.io/reproduced-results) - with 40+ leaderboards
 6. [Weights & Biases - Benchmarks](https://www.wandb.com/benchmarks) - with 9+ leaderboards
 
-### Making project pages
+[delete] ### Making project pages
 
 1. [GitHub pages](https://pages.github.com/)
 2. [Fastpages](https://github.com/fastai/fastpages)
 
-### Making demos and tutorials
+[delete] ### Making demos and tutorials
 
 1. [Google Colab](https://colab.research.google.com/)
 2. [Binder](https://mybinder.org/)
 3. [Streamlit](https://github.com/streamlit/streamlit)
 
-## Contributing
+[delete]## Contributing
 
 If you'd like to contribute, or have any suggestions for these guidelines, you can contact us at hello@paperswithcode.com or open an issue on this GitHub repository. 
 
 All contributions welcome! All content in this repository is licensed under the MIT license.
+
+
