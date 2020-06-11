@@ -37,7 +37,6 @@ Reconsolidate the LID sequences according to the refined recall. The corresponde
 Modify the recall in the code `reconsolidate_LID.py` accordingly then `python reconsolidate_LID.py` to reconsolidate the LID sequences.
 
 | recall         | the highest alpha noise rate to use |
-| -------------- |-------------------------------------|
 |       1        |                86.4%                |
 | -------------- |-------------------------------------|
 |       0.98     |                88.0%                |
